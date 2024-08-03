@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -9,15 +7,16 @@ const morgan = require('morgan');
 const axios = require('axios');
 
 const app = express();
-const port = 3080;
 
-app.use(cors());
+// Update CORS settings
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*'
+}));
+
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-// Anthropic API key (use environment variable in production)
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-
 
 async function callClaudeApi(prompt) {
     try {
@@ -53,6 +52,8 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// Update port for Vercel
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
 });
