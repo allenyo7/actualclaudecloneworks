@@ -8,14 +8,24 @@ const axios = require('axios');
 
 const app = express();
 
+const allowedOrigins = [
+  'https://actualclaudecloneworks-client.vercel.app',
+  'https://actualclaudecloneworks-client-f8oe38q3v-allen-patys-projects.vercel.app',
+  'https://allenyo.io',
+  'https://www.allenyo.io'
+];
+
 app.use(cors({
-  origin: [
-    'https://actualclaudecloneworks-client.vercel.app',
-    'https://actualclaudecloneworks-client-f8oe38q3v-allen-patys-projects.vercel.app',
-    'https://allenyo.io',
-    'https://www.allenyo.io'
-  ],
-  methods: ['POST', 'GET', 'OPTIONS']
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['POST', 'GET', 'OPTIONS'],
+  credentials: true,
+  optionsSuccessStatus: 204
 }));
 
 app.use(bodyParser.json());
