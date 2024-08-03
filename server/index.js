@@ -11,7 +11,9 @@ const app = express();
 app.use(cors({
   origin: [
     'https://actualclaudecloneworks-client.vercel.app',
-    'https://actualclaudecloneworks-client-f8oe38q3v-allen-patys-projects.vercel.app'
+    'https://actualclaudecloneworks-client-f8oe38q3v-allen-patys-projects.vercel.app',
+    'https://allenyo.io',
+    'https://www.allenyo.io'
   ],
   methods: ['POST', 'GET', 'OPTIONS']
 }));
